@@ -22,7 +22,8 @@ pipeline {
             steps {
                 sh 'mkdir -p dist'
                 sh 'docker run --rm -v $(pwd)/dist:/app/dist flask-build python -m build'
-                archiveArtifacts artifacts: 'dist/*.whl', fingerprint: true
+                sh 'sudo chmod -R 777 dist/'
+                archiveArtifacts artifacts: 'dist/*.whl', allowEmptyArchive: false
             }
         }
         stage('Deploy') {

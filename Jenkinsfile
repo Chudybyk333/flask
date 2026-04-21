@@ -24,6 +24,13 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/*.whl', fingerprint: true
             }
         }
+        stage('Deploy') {
+            steps {
+                sh 'docker build -t flask-production -f Dockerfile.deploy .'
+                sh 'docker rm -f flask-app-prod || true'
+                sh 'docker run -d --name flask-app-prod -p 5001:5000 flask-production'
+            }
+        }
     }
     post {
         always {

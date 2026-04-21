@@ -4,5 +4,5 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 RUN git clone https://github.com/pallets/flask.git .
-
+RUN pip install --no-cache-dir ".[async]"
 RUN pip install --no-cache-dir build

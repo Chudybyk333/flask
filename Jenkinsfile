@@ -20,6 +20,7 @@ pipeline {
         }
         stage('Publish - Artifact') {
             steps {
+                sh 'mkdir -p dist'
                 sh 'docker run --rm -v $(pwd)/dist:/app/dist flask-build python -m build'
                 archiveArtifacts artifacts: 'dist/*.whl', fingerprint: true
             }

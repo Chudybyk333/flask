@@ -18,6 +18,12 @@ pipeline {
                 junit 'reports/*.xml'
             }
         }
+        stage('Publish - Artifact') {
+            steps {
+                sh 'docker run --rm -v $(pwd)/dist:/app/dist flask-build python -m build'
+                archiveArtifacts artifacts: 'dist/*.whl', fingerprint: true
+            }
+        }
     }
     post {
         always {

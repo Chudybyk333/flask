@@ -22,7 +22,7 @@ pipeline {
             steps {
                 sh 'mkdir -p dist'
                 sh 'docker run --rm -v $(pwd)/dist:/app/dist flask-build python -m build'
-                sh 'sudo chmod -R 777 dist/'
+                sh 'docker run --rm -v $(pwd):/data alpine chown -R 1000:1000 /data/dist'
                 archiveArtifacts artifacts: 'dist/*.whl', allowEmptyArchive: false
             }
         }

@@ -1,6 +1,6 @@
 FROM flask-build
 
-RUN pip install --no-cache-dir ".[test]" pytest-html
+RUN pip install --no-cache-dir ".[test,async]" pytest-html
 
 RUN mkdir -p /app/reports
 

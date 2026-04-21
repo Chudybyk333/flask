@@ -1,5 +1,7 @@
 FROM flask-build
 
-WORKDIR /app
+RUN pip install --no-cache-dir ".[test]" pytest-html
 
-CMD ["pytest"]
+RUN mkdir -p /app/reports
+
+CMD ["pytest", "--junitxml=reports/results.xml"]

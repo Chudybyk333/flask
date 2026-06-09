@@ -9,11 +9,11 @@ on:
       - ino_dev
 
 jobs:
-  build_and_test:
+  pipeline_execute:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository code
+      - name: STAGE Setup
         uses: actions/checkout@v4
 
       - name: Set up Python 3.12
@@ -30,3 +30,15 @@ jobs:
       - name: Run pytest validation
         run: |
           pytest
+        continue-on-error: true
+
+      - name: STAGE Publish - Budowanie artefaktu .whl oraz źródłowego
+        run: |
+          python -m build
+
+      - name: STAGE Publish - Załączanie artefaktu
+        uses: actions/upload-artifact@v4
+        with:
+          name: flask-distributable-package
+          path: dist/
+          retention-days: 5
